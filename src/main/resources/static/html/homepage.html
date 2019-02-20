@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" href="../css/common.css" rel="stylesheet">
+
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- 首页js -->
+    <!--<script src="../js/homepage.js"></script>
+    <script src="../js/common.js"></script>-->
+    <script th:src="@{/js/login.js}" src="../js/login.js"></script>
+    <script type="text/javascript">
+
+
+
+
+    </script>
+</head>
+<body>
+
+<div style="width:800px;height:30px; border:1px solid black">
+    <div>
+        <button th:if="${session.user == null}" id="show_login_form_btn">登录</button>
+        <button th:if="${session.user == null}" id="show_signup_form_btn">注册</button>
+        <span th:if="${session.user != null}" >Hi, [[${session.user.userName}]] </span>
+        <button th:if="${session.user != null}"><a href="/logout">退出登录</a></button>
+    </div>
+</div>
+
+
+
+    <!-- 登录表单的容器 -->
+    <div id="login_form_container" class="vanish">
+        <div id="login_from_div" class="login_div">
+            <form id="login_form" action="" method="post">
+                <table>
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td width="270px"><input id="username" name="userName" placeholder="用户名" class="input_text"/></td>
+                    </tr>
+                    <tr>
+                        <td width="270px"><input type="password" id="password" name="userPassword" placeholder="密码" class="input_text"/></td>
+                    </tr>
+                    <tr class="rememberme_tr">
+                        <td  align="right">
+                            <input type="checkbox" name="rememberMe" checked="true" value="checked"/>
+                        </td>
+                        <td>记住我</td>
+                    </tr>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <button id="login_btn" class="login">登录</button>
+                            <button id="regist_btn" class="regist">注册</button>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册表单的容器 -->
+    <div id="signup_form_container" class="vanish">
+        <div id="signup_from_div" class="login_div">
+            <form id="signup_form" action="" method="post">
+                <table>
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td width="270px"><input id="signup_username" name="userName" placeholder="用户名" class="input_text"/></td>
+                    </tr>
+                    <tr>
+                        <td width="270px"><input type="password" id="signup_password" name="userPassword" placeholder="密码" class="input_text"/></td>
+                    </tr>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <button id="signup_btn" class="login">注册</button>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+</html>

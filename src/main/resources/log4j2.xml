@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN" monitorInterval="150">
+
+    <properties>
+        <property name="LOG_HOME">/data/logs/chatroom</property>
+        <property name="LOG_FILE_NAME">chatroom</property>
+    </properties>
+
+    <Appenders>
+        <File name="error" fileName="${LOG_HOME}/${LOG_FILE_NAME}-error.log" append="true">
+            <Filters>
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout
+                    pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p] chatroom [%t] (%c:%L) - %m%n"/>
+        </File>
+        <!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+        <RollingRandomAccessFile name="file"
+                                 fileName="${LOG_HOME}/${LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${LOG_FILE_NAME}.%d{yyyy-MM-dd-HH}-%i.log.bak"
+                                 immediateFlush="false" append="true">
+            <PatternLayout
+                    pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p] chatroom [%t] (%c:%L) - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="200 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingRandomAccessFile>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} -> %msg%n" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <asyncRoot level="info"  includeLocation="false">
+            <AppenderRef ref="file" />
+            <AppenderRef ref="error" />
+            <!-- 控制台输出耗费性能，本地调试打开，部署服务器关闭 -->
+            <AppenderRef ref="Console"/>
+        </asyncRoot>
+        <logger name="org.springframework" level="warn" />
+        <logger name="org.mybatis.spring.SqlSessionUtils" level="info" />
+    </Loggers>
+
+</Configuration>

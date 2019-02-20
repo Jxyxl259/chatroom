@@ -1,0 +1,22 @@
+.vanish{
+    display:none ;
+}
+
+.login_div{
+    float: right;
+    width: 420px;
+    height: 420px;
+    font-size: 20px;
+    border-radius: 20px;
+}
+
+/* 登录表单的容器 */
+#login_form_container {
+    z-index: 50;
+    #display:none ;
+    position: fixed;
+    margin-left: 350px;
+    margin-top: 0px;
+    width: 420px;
+    height: 420px;
+}
