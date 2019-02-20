@@ -21,11 +21,11 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -216,8 +216,9 @@ public class MyShiroConfig{
         filterChainManager.setFilterChainDefinitionMap(filterDefMap);
 
         // 此处添加自定义拦截器实现扩展
-        //Map<String, Filter> customFilters = new LinkedHashMap<>();
-        //filterChainManager.setCustomFilters(customFilters);
+        Map<String, Filter> customFilters = new LinkedHashMap<>();
+
+        filterChainManager.setCustomFilters(customFilters);
 
         filterChainManager.organizeFilterChainByDefinitionMap();
 

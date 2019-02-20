@@ -3,6 +3,7 @@ package com.jiang.chatroom.controller;
 import com.jiang.chatroom.common.RequestResult;
 import com.jiang.chatroom.common.enums.GlobalMessageEnum;
 import com.jiang.chatroom.common.util.IpAddressUtil;
+import com.jiang.chatroom.config.redis.JedisConfig;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -14,9 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import static com.jiang.chatroom.common.util.RedisKeyUtil.userIpAddrHashKey;
 
 @Controller
 public class LoginSignupController {
@@ -25,6 +29,8 @@ public class LoginSignupController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private JedisConfig jedisConfig;
 
 
     @PostMapping("/doLogin")
@@ -50,6 +56,10 @@ public class LoginSignupController {
             session.setAttribute("user", user);
             String userIp = IpAddressUtil.getIpAdrress(request);
             log.info("用户IP地址{}", userIp);
+            Jedis jedis = jedisConfig.getConnection();
+
+            // 缓存用户登录后的IP地址
+            jedis.hset(userIpAddrHashKey, String.valueOf(user.getId()), userIp);
         } catch (ExcessiveAttemptsException e) {
             result.setSuccess(false);
             result.setT(false);
@@ -97,5 +107,7 @@ public class LoginSignupController {
         }
         return result;
     }
+
+
 
 }
