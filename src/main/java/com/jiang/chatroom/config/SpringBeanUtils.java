@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author: jiangxy
  * @create: 2018-07-10 21:31
  */
-@Component
+@Component("springUtils")
 public class SpringBeanUtils implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -40,5 +40,6 @@ public class SpringBeanUtils implements ApplicationContextAware {
         Object bean = applicationContext.getBean(clazz);
         return bean;
     }
+
 
 }

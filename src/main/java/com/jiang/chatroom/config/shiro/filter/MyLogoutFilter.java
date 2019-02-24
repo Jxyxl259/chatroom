@@ -3,7 +3,6 @@ package com.jiang.chatroom.config.shiro.filter;
 import com.jiang.chatroom.entity.User;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
-import org.springframework.web.context.WebApplicationContext;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -20,17 +19,23 @@ import static com.jiang.chatroom.common.util.RedisKeyUtil.userIpAddrHashKey;
 public class MyLogoutFilter extends LogoutFilter {
 
 
-    private WebApplicationContext wac;
+    private JedisPool pool;
 
+    public MyLogoutFilter(JedisPool pool){
+        this.pool = pool;
+    }
 
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         Subject subject = this.getSubject(request, response);
         User user = (User) subject.getPrincipals().getPrimaryPrincipal();
-        this.wac = (WebApplicationContext)super.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        JedisPool pool = (JedisPool)wac.getBean("jedisPool");
+
         Jedis jedis = pool.getResource();
         jedis.hdel(userIpAddrHashKey, String.valueOf(user.getId()));
         return super.preHandle(request, response);
+    }
+
+    public void setPool(JedisPool pool) {
+        this.pool = pool;
     }
 }

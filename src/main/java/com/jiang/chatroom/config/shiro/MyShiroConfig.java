@@ -1,7 +1,9 @@
 package com.jiang.chatroom.config.shiro;
 
+import com.jiang.chatroom.config.SpringBeanUtils;
 import com.jiang.chatroom.config.SpringCacheManagerWrapper;
 import com.jiang.chatroom.config.SpringConfig;
+import com.jiang.chatroom.config.shiro.filter.MyLogoutFilter;
 import com.jiang.chatroom.service.UserService;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -24,7 +26,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import redis.clients.jedis.JedisPool;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -201,7 +205,7 @@ public class MyShiroConfig{
 
 
     @Bean
-    public MyPathMatchingFilterChainResolver filterChainResolver(){
+    public MyPathMatchingFilterChainResolver filterChainResolver(@Autowired JedisPool jedisPool){
         MyPathMatchingFilterChainResolver filterChainResolver = new MyPathMatchingFilterChainResolver();
         MyFilterChainManager filterChainManager = new MyFilterChainManager();
 
@@ -217,7 +221,8 @@ public class MyShiroConfig{
 
         // 此处添加自定义拦截器实现扩展
         Map<String, Filter> customFilters = new LinkedHashMap<>();
-
+        MyLogoutFilter logoutFilter = new MyLogoutFilter(jedisPool);
+        customFilters.put("logout", logoutFilter);
         filterChainManager.setCustomFilters(customFilters);
 
         filterChainManager.organizeFilterChainByDefinitionMap();

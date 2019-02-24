@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -15,6 +16,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author: jiangbug@outlook.com
  * @create: 2019-02-21 00:07
  */
+@Order(1)
 @Configuration(value="jedisConfig")
 public class JedisConfig extends CachingConfigurerSupport {
 
