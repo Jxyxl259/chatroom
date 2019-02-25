@@ -9,12 +9,17 @@ $(function(){
 
 var fetch_friend_list = function(){
     console.log("拉取用户好友列表...");
+
+    // 好友列表 ul
     var templ_friend_list = function(t){
         var _f_list_content =
-           ' <ul id="friend_list_ul">'+
+           '<p>我的好友</p>'+
+           ' <ul style="padding-left: 20px" id="friend_list_ul" type="none">'+
            '{{each(i, _user_friend) friend}}'+
            '     <li id="${_user_friend.id}">'+
-           '         ${_user_friend.userName}'+
+           '        <div style="display: inline;cursor:pointer;">' +
+            '           <img width="30" height="30" src="./../img/qq_icon.png"/><span>${_user_friend.userName}</span>' +
+            '       </div>'+
            '     </li>'+
            '{{/each}}'+
            ' </ul>';
@@ -42,4 +47,6 @@ var fetch_friend_list = function(){
     })
 
 
-}
+};
+
+
