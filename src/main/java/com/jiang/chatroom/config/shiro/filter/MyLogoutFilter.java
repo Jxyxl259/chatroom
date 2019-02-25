@@ -25,6 +25,13 @@ public class MyLogoutFilter extends LogoutFilter {
         this.pool = pool;
     }
 
+    /**
+     * 用户登出时将存在redis中的用户IP地址移除掉
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         Subject subject = this.getSubject(request, response);

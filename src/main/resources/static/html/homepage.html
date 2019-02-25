@@ -15,11 +15,11 @@
     <!--<script src="../js/homepage.js"></script>
     <script src="../js/common.js"></script>-->
     <script th:src="@{/js/login.js}" src="../js/login.js"></script>
+    <script th:src="@{/js/login.js}" src="../js/friends.js"></script>
     <script type="text/javascript">
-
-
-
-
+        // $(function(){
+        //     $("#li_1").html("aaaaa");
+        // })
     </script>
 </head>
 <body>
@@ -94,6 +94,10 @@
         </div>
     </div>
 
+    <!-- 好友列表 -->
+    <div th:if="${session.user != null}">
+        <div th:replace="fragement/fg_friends_list::friend_list"></div>
+    </div>
 
 </body>
 </html>

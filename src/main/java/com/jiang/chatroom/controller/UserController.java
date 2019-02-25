@@ -52,7 +52,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @PostMapping("/fetchUserFriendList")
+    @PostMapping("/fetchUserFriendsList")
     public RequestResult getUserPerms(HttpServletRequest request){
         User u = (User)request.getSession().getAttribute("user");
         Long userId = u.getId();
