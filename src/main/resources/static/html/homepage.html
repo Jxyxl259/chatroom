@@ -9,13 +9,14 @@
     <link th:href="@{/css/common.css}" href="../css/common.css" rel="stylesheet">
 
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- 首页js -->
     <!--<script src="../js/homepage.js"></script>
     <script src="../js/common.js"></script>-->
     <script th:src="@{/js/login.js}" src="../js/login.js"></script>
-    <script th:src="@{/js/login.js}" src="../js/friends.js"></script>
+    <script th:src="@{/js/friends.js}" src="../js/friends.js"></script>
     <script type="text/javascript">
         // $(function(){
         //     $("#li_1").html("aaaaa");
@@ -96,7 +97,8 @@
 
     <!-- 好友列表 -->
     <div th:if="${session.user != null}">
-        <div th:replace="fragement/fg_friends_list::friend_list"></div>
+        <!--<div th:replace="fragement/fg_friends_list::friend_list" id="_user_friends_list"></div>-->
+        <div style="width:200px;height:600px; border:1px solid black" id="_user_friends_list"></div>
     </div>
 
 </body>

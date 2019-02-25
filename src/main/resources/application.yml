@@ -24,6 +24,7 @@ spring:
   thymeleaf:
     prefix: classpath:/static/html/
     suffix: .html
+    cache: false
 
   #redis jedis\u914D\u7F6E
   redis:

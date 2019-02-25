@@ -54,9 +54,24 @@ public class UserController {
      */
     @PostMapping("/fetchUserFriendsList")
     public RequestResult getUserPerms(HttpServletRequest request){
+        RequestResult result = new RequestResult(false);
         User u = (User)request.getSession().getAttribute("user");
+        if(u == null){
+            result.setMessage("用户未登陆");
+            result.setStatus("9999");
+            return result;
+        }
         Long userId = u.getId();
-        UserVo userVo  =  userService.getUserFriendList(userId);
+        UserVo userVo  = null;
+        try {
+            userVo = userService.getUserFriendList(userId);
+        } catch (Exception e) {
+            log.error("拉取好友列表 userService.getUserFriendList 异常, cause:{} message:{}", e.getCause(), e.getMessage());
+            result.setMessage("拉取好友列表异常，请联系管理员");
+            result.setStatus("9999");
+            e.printStackTrace();
+            return result;
+        }
         return RequestResultFactory.success(userVo);
     }
 
