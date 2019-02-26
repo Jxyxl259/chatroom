@@ -17,6 +17,7 @@
     <script src="../js/common.js"></script>-->
     <script th:src="@{/js/login.js}" src="../js/login.js"></script>
     <script th:src="@{/js/friends.js}" src="../js/friends.js"></script>
+    <script th:src="@{/js/chat.js}" src="../js/chat.js"></script>
     <script type="text/javascript">
         // $(function(){
         //     $("#li_1").html("aaaaa");
@@ -25,11 +26,11 @@
 </head>
 <body>
 
-<div style="width:1200px;height:30px; border:1px solid black; float: left;">
-    <div style="float: right; padding-right: 50px;">
+<div id="top_nav" style="width:1200px;height:30px; border:1px solid black; float: left;">
+    <div id="top_nav_btn_grp" style="float: right; padding-right: 50px;">
         <button th:if="${session.user == null}" id="show_login_form_btn">登录</button>
         <button th:if="${session.user == null}" id="show_signup_form_btn">注册</button>
-        <span th:if="${session.user != null}" >Hi, [[${session.user.userName}]] </span>
+        <span th:if="${session.user != null}" >Hi, <label id="login_username">[[${session.user.userName}]] </label></span>
         <button th:if="${session.user != null}"><a href="/logout">退出登录</a></button>
     </div>
 </div>
@@ -147,6 +148,9 @@
         <!--<div th:replace="fragement/fg_friends_list::friend_list" id="_user_friends_list"></div>-->
         <div style="width:200px;height:800px; border:1px solid black; float: left;" id="_user_friends_list"></div>
     </div>
+
+<!-- 测试 web-socket  -->
+<div id="message"></div>
 
 </body>
 </html>
