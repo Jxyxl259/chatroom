@@ -27,7 +27,7 @@ var fetch_friend_list = function(){
         $.template("_user_friends_templ", _f_list_content);
 
         $.tmpl("_user_friends_templ", t).appendTo("#_user_friends_list");
-    }
+    };
 
     $.ajax({
         url:"/user/fetchUserFriendsList",
@@ -55,20 +55,41 @@ var fetch_friend_list = function(){
  */
 var show_chat_tab = function(ele){
 
-    //先获取当前打开的活动窗口，如果有先关闭该窗口
+    // 获取到好友列表聊天对象昵称 ul>li>div>span
+    var _f_name_span = $(ele).children("span")[0];
+    var friend_name = trim( _f_name_span.innerHTML );
+
+    //先获取当前打开的活动tab页 ，如果有先将该窗口置为非活动tab页
     var active_tab = $("#chat_record_tab_ul li.active")[0];
     if(!isEmpty(active_tab)){
+
+        // 获取到当前活动的tab头信息 ul>li>a 的文本，如果与即将打开的聊天对象的昵称不相同 则移除当前tab的活动标签并 新打开一个tab页
+        var _active_tab_name = $("#chat_record_tab_ul li.active a")[0];
+        var _active_tab_contact_name = _active_tab_name.innerHTML;
+        if( trim(_active_tab_contact_name) === friend_name ){
+            // 当前tab页为A 点击好友列表中的A，TODO 拉取聊天记录
+            return;
+        }
         $(active_tab).removeClass("active");
     }
 
-    // 获取到聊天对象昵称 ul>li>div>span
-    var _f_name_span = $(ele).children("span")[0];
-    var friend_name = _f_name_span.innerHTML;
+    // 获取到所有tab页头部，判断如果有与 好友列表聊天对象昵称相同的则激活
+    var _tab_exist = false;
+    $("#chat_record_tab_ul li a").each(function(index) {
+        var _a_ele = $(this);
+        if (friend_name === trim(this.innerHTML)) {
+            _a_ele.parent("li").addClass("active");
+            _tab_exist = true;
+        }
+    });
 
-    // 获取所有的 ul>li>a 的文本，如果与即将打开的聊天对象的昵称相同则使用该聊天窗口，否则新打开一个聊天窗口
+    if( _tab_exist ){
+        // TODO 拉取聊天记录
+        return;
+    }
 
 
-
+    // 新增tab标签
     // 标签页头部信息
     var user_tab_header =
                 ' <li class="active">'+
@@ -76,7 +97,7 @@ var show_chat_tab = function(ele){
                         friend_name+
                 '     </a>'+
                 ' </li>';
-
+    // 聊天记录
     var chat_container =
                 '<div class="tab-pane fade in active" id="'+ friend_name +'">'+
                     '<p> 聊天记录聊天记录聊天记录聊天记录</p>'+

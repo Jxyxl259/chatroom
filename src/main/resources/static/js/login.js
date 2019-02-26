@@ -88,6 +88,11 @@ $(function(){
 });
 
 
+// 删除字符串两边的空格
+var trim = function (str){
+    console.log("str ->" + typeof (str));
+    return str.replace(/^\s+|\s+$/g,"");
+};
 
 
 
