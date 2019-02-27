@@ -1,6 +1,7 @@
 package com.jiang.chatroom.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jiang.chatroom.common.RequestResult;
 import com.jiang.chatroom.dao.UserMapper;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.service.UserService;
@@ -72,5 +73,26 @@ public class UserServiceImpl implements UserService {
         int insert = userMapper.insert(u);
 
         return insert == 1;
+    }
+
+
+    @Override
+    public RequestResult<String> addfriend(User user, String searchName) {
+        RequestResult<String> result = new RequestResult<>(false);
+        User dest = userMapper.selectByUserName(searchName);
+        if(dest != null){
+            // TODO 先判断用户是否已经是好友
+            // ...
+
+            //用户存在，可添加好友
+            int affectRow = userMapper.insertFriendRelationship(user.getId(), dest.getId());
+            if(affectRow == 1 ){
+                return new RequestResult<>("用户添加好友成功", true);
+            }
+        }else{
+            result.setMessage("用户不存在");
+        }
+
+        return result;
     }
 }

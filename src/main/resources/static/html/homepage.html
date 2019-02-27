@@ -7,6 +7,7 @@
 
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/common.css}" href="../css/common.css" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min.css}" href="../css/font-awesome.min.css" rel="stylesheet">
 
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" crossorigin="anonymous"></script>
@@ -26,17 +27,17 @@
 </head>
 <body>
 
-<div id="top_nav" style="width:1200px;height:30px; border:1px solid black; float: left;">
-    <div id="top_nav_btn_grp" style="float: right; padding-right: 50px;">
+<div id="top_nav" class="top_nav_div">
+    <div id="top_nav_btn_grp" class="top_nav_btn_grp_div">
         <button th:if="${session.user == null}" id="show_login_form_btn">登录</button>
         <button th:if="${session.user == null}" id="show_signup_form_btn">注册</button>
         <span th:if="${session.user != null}" >Hi, <label id="login_username">[[${session.user.userName}]] </label></span>
-        <button th:if="${session.user != null}"><a href="/logout">退出登录</a></button>
+        <button th:if="${session.user != null}"><a href="/logout">退出</a></button>
     </div>
 </div>
 
-<div style="width:1000px; height: 800px;float: left; border-left: 1px solid black; border-top: 1px solid black;">
-    <div id="chat_record_container" style="width:1000px; height:600px;border-bottom: 1px solid black;float: left;">
+<div class="center_content">
+    <div id="chat_record_container" class="chat_record_container_div">
         <ul id="chat_record_tab_ul" class="nav nav-tabs">
            <!-- <li class="active">
                 <a href="#home" data-toggle="tab">
@@ -68,14 +69,14 @@
         </div>
     </div>
 
-    <div id="input_frame_container" style="width:1000px; height: 200px; border-bottom: 1px solid black; float: left;">
+    <div id="input_frame_container" class="input_frame_container_div">
         <!-- 输入区域 -->
         <div id="">
-            <textarea id="input_area" style="width: 1000px; height: 160px; border-radius: 10px 10px"></textarea>
+            <textarea id="input_area"></textarea>
         </div>
     </div>
     <!-- 按钮区域 -->
-    <div id="button_area" style="margin: -35px 20px 0px 0px; float: right;position: relative; z-index:999">
+    <div id="button_area">
         <button id="close_current_window"> 关闭</button>
         <button id="send_message"> 发送</button>
     </div>
@@ -143,10 +144,36 @@
         </div>
     </div>
 
+    <!-- 好友添加窗口 -->
+    <div id="add_friend_window" style="position: absolute;margin: 100px 300px;z-index: 555;border:1px solid #d5d5d5; background-color: aliceblue" class="vanish">
+        <div id="signup_from_di" class="add_friend_div">
+            <form id="add_friend_from" action="" method="post">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="270px"><input id="friendName" name="userName" placeholder="昵称" class="input_text"/></td>
+                    </tr>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <button id="add_friend_btn" class="login">添加</button>
+                        </td>
+                    </tr>
+                    <span></span>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+
     <!-- 好友列表 -->
-    <div th:if="${session.user != null}">
+    <div th:if="${session.user != null}" id="friend_list_container_div">
         <!--<div th:replace="fragement/fg_friends_list::friend_list" id="_user_friends_list"></div>-->
-        <div style="width:200px;height:800px; border:1px solid black; float: left;" id="_user_friends_list"></div>
+        <label>我的好友</label> <label id="show_add_friend_btn" style="float: right;">添加<i class="fa fa-plus add_friend" ></i></label>
+        <div></div>
+        <div id="_user_friends_list"></div>
     </div>
 
 <!-- 测试 web-socket  -->

@@ -45,4 +45,12 @@ public interface UserMapper {
      * @return
      */
     User selectUserInfoByUserId(Long id);
+
+    /**
+     * 添加好友关系
+     * @return
+     * @param id
+     * @param destId
+     */
+    int insertFriendRelationship(@Param("userId") Long id, @Param("friendId") Long destId);
 }

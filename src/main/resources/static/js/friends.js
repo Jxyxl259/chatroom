@@ -1,19 +1,63 @@
 // jQuery库冲突解决方案
 //var $j = jQuery.noConflict();
 
+
+
 $(function(){
 
-    fetch_friend_list()
+    $("#show_add_friend_btn").unbind('click').click(
+        function(){
+            $("#add_friend_window").toggleClass("vanish");
+        }
+    );
+
+    fetch_friend_list();
+
+
+    /**
+     * 添加好友
+     */
+    $("#add_friend_btn").unbind('click').click(function(){
+        var username = $("#friendName").val();
+
+        if(isEmpty(username) ){
+            alert("请输入用户昵称");
+            return;
+        }
+        //var flag = false;
+        var form = new FormData(document.getElementById("add_friend_from"));
+        $.ajax({
+            url:"/user/addFriend",
+            type:"post",
+            data:form,
+            async:false,
+            processData:false,
+            contentType:false,
+            success:function(res){
+                if(res.success){
+                    console.log("添加好友成功,跳转到首页");
+                    $("#add_friend_window").toggleClass("vanish");
+
+
+                    // 添加成功后重新刷新好友列表
+                    fetch_friend_list()
+                }else{
+                    console.error("注册失败, 错误原因:" + res.message);
+                    $("#add_friend_from span").eq(0).html("").append("<label>"+ res.message +"</label>")
+                }
+            }
+        });
+        return false;
+    });
 
 });
 
 var fetch_friend_list = function(){
     console.log("拉取用户好友列表...");
-
+    $("#_user_friends_list").html("");
     // 好友列表 ul
     var templ_friend_list = function(t){
         var _f_list_content =
-           '<p>我的好友</p>'+
            ' <ul style="padding-left: 20px" id="friend_list_ul" type="none">'+
            '{{each(i, _user_friend) friend}}'+
            '     <li id="${_user_friend.id}">'+
@@ -93,13 +137,13 @@ var show_chat_tab = function(ele){
     // 标签页头部信息
     var user_tab_header =
                 ' <li class="active">'+
-                '     <a href="#'+ friend_name +'" data-toggle="tab">'+
+                '     <a href="#'+ friend_name +'" data-toggle="tab" style="padding: 3px 6px;">'+
                         friend_name+
                 '     </a>'+
                 ' </li>';
     // 聊天记录
     var chat_container =
-                '<div class="tab-pane fade in active" id="'+ friend_name +'">'+
+                '<div class="tab-pane fade in active scroll" id="'+ friend_name +'">'+
                     /*'<p> 聊天记录聊天记录聊天记录聊天记录</p>'+*/
                 '</div>';
 
@@ -112,3 +156,5 @@ var show_chat_tab = function(ele){
 
 
 };
+
+

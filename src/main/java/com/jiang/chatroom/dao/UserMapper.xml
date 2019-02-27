@@ -126,6 +126,12 @@
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}
       )
   </insert>
+
+    <insert id="insertFriendRelationship">
+      insert into t_friend(id, user_id, user_friend_ids) values (null, #{userId}, #{friendId})
+    </insert>
+
+
     <insert id="insertSelective" parameterType="com.jiang.chatroom.entity.User">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">

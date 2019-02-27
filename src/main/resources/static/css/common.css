@@ -20,3 +20,15 @@
     width: 420px;
     height: 420px;
 }
+
+div.scroll{    overflow: auto;max-height: 600px;}
+div.center_content{width:1000px; height: 800px;float: left; border-left: 1px solid black; border-top: 1px solid black;}
+div.top_nav_div{width:1200px;height:30px; border:1px solid black; float: left;}
+div.top_nav_div>div.top_nav_btn_grp_div{float: right; padding-right: 50px;}
+div.center_content>div.chat_record_container_div{width:1000px; height:600px;border-bottom: 1px solid black;float: left;}
+div.center_content>div.input_frame_container_div{width:1000px; height: 200px; border-bottom: 1px solid black; float: left;}
+
+#input_area{width: 1000px; height: 160px; border-radius: 10px 10px}
+#button_area{margin: -35px 20px 0px 0px; float: right;position: relative; z-index:999}
+#friend_list_container_div{position: relative;float: left;width: 200px;height: 800px;border: 1px solid black;}
+#add_friend_btn{    padding: 2px 6px;float: right;}

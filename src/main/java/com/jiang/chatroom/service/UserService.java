@@ -1,5 +1,6 @@
 package com.jiang.chatroom.service;
 
+import com.jiang.chatroom.common.RequestResult;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.vo.UserVo;
 
@@ -40,4 +41,12 @@ public interface UserService {
      * @return
      */
     boolean userSignUp(User u);
+
+    /**
+     * 用户添加好友
+     * @param user
+     * @param searchName
+     * @return
+     */
+    RequestResult<String> addfriend(User user, String searchName);
 }

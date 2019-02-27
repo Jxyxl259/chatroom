@@ -70,7 +70,7 @@ public class MyShiroRealm extends AuthorizingRealm{
 
     public static void main(String[] args) {
         String passwordBeforeEncrypt = "jiangBUG";
-        ByteSource credentialsSalt = ByteSource.Util.bytes("gb");
+        ByteSource credentialsSalt = ByteSource.Util.bytes("xixixi");
         String salt = credentialsSalt.toString();
         System.out.println("加密盐值为:" + salt);
         SimpleHash simpleHash = new SimpleHash(

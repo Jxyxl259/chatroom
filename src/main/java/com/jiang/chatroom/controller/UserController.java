@@ -6,15 +6,16 @@ import com.jiang.chatroom.common.RequestResultFactory;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.service.UserService;
 import com.jiang.chatroom.vo.UserVo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @description: 用户相关的控制器
@@ -73,6 +74,30 @@ public class UserController {
             return result;
         }
         return RequestResultFactory.success(userVo);
+    }
+
+
+
+    /**
+     * 添加好友
+     * @param u
+     * @param session
+     * @return
+     */
+    @PostMapping("/addFriend")
+    @ResponseBody
+    public RequestResult<Boolean> signUp(User friend, HttpSession session){
+        //log.debug("signUp user={}", u);
+        RequestResult<Boolean> result = new RequestResult<>(true,true);
+        User user = (User) session.getAttribute("user");
+        String searchName = friend.getUserName();
+        RequestResult<String> resp = userService.addfriend(user, searchName);
+        if(resp.getSuccess()){
+            return result;
+        } else{
+            log.error("用户添加好友失败");
+        }
+        return result;
     }
 
 

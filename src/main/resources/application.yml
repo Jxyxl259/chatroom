@@ -15,7 +15,7 @@ spring:
   # 静态资源
   resources:
     # 静态资源查找路径
-    static-locations: classpath:/static/,classpath:/static/templates,classpath:/static/js,classpath:/static/css
+    static-locations: classpath:/static
     # 开发环境关闭缓存
     chain:
       cache: false
