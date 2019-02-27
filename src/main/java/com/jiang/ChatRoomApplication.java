@@ -4,6 +4,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -14,10 +16,14 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan({
         "com.jiang.**.dao"
 })
-public class ChatRoomApplication {
+public class ChatRoomApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(ChatRoomApplication.class, args);
     }
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(ChatRoomApplication.class);
+    }
 }
