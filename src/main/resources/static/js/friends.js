@@ -100,7 +100,7 @@ var show_chat_tab = function(ele){
     // 聊天记录
     var chat_container =
                 '<div class="tab-pane fade in active" id="'+ friend_name +'">'+
-                    '<p> 聊天记录聊天记录聊天记录聊天记录</p>'+
+                    /*'<p> 聊天记录聊天记录聊天记录聊天记录</p>'+*/
                 '</div>';
 
     // 设置新的活动标签

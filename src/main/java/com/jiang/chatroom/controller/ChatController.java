@@ -33,6 +33,7 @@ public class ChatController {
     @Autowired
     private JedisConfig jedisConfig;
 
+    @Deprecated
     @ResponseBody
     @RequestMapping(value=("/msg/receive"), consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public RequestResult<String> reciveMsg(@RequestBody Message msg, HttpServletRequest request){

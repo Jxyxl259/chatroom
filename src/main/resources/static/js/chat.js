@@ -59,7 +59,13 @@ var send_msg = function(contact, msg){
     //     }
     // })
 
-    _web_socket.sendChattingMsg(JSON.stringify({'msg':msg,'contactName':contact}))
+    _web_socket.sendChattingMsg(JSON.stringify({'msg':msg,'contactName':contact}));
+    var _msg_div =
+       ' <div style="display:block;float:left;width:100%">' +
+       '     <p style="margin:2px 20px 2px 0px;width: fit-content;max-width: 40%;float:right;border-radius:5px ;border:1px solid #d5d5d5;padding: 2px 5px;">'+ msg +'</p>'+
+       ' </div>';
+    $("#"+contact).append(_msg_div);
+    $("#input_area").val("");
 };
 
 
@@ -83,26 +89,36 @@ var _web_socket = {
     initSocket : function(name){
 
         // 初始化 socket连接
-        this.websocket = new WebSocket("ws://10.112.98.226:80/dispatcher/" + name);
+         this.websocket = new WebSocket("ws://10.112.98.226:80/dispatcher/" + name);
+        // this.websocket = new WebSocket("ws://192.168.0.109:80/dispatcher/" + name);
 
         // 连接成功建立的回调方法
         this.websocket.onopen = function () {
-            setMessageInnerHTML("WebSocket连接成功");
+            setMessageInnerHTML("WebSocket连接成功...");
         };
 
         // 接收到消息的回调方法
         this.websocket.onmessage = function (event) {
-            setMessageInnerHTML(event.data);
+
+            // TODO 根据event.data中的消息发送人，来判断当前tab是否属于该发送人，如果是，直接追加消息，如果不是，新建窗口并追加消息
+            // TODO 现假定当前tab 是该发送人
+            var _sock_msg = JSON.parse(event.data);
+            var _target_contact_tab_name = _sock_msg.contactName;
+            var _recive_msg =
+              '  <div style="display:block;float:left;width:100%;">'+
+              '      <p style="margin:2px 0px 2px 20px;width: fit-content;max-width: 40%;border-radius:5px;border:1px solid #d5d5d5;padding: 2px 5px;">' + _sock_msg.msg + '</p>'+
+              '  </div>';
+            $("#"+_target_contact_tab_name).append(_recive_msg);
         };
 
         // 连接关闭的回调方法
         this.websocket.onclose = function () {
-            setMessageInnerHTML("WebSocket连接关闭");
+            setMessageInnerHTML("WebSocket连接关闭...");
         };
 
         // 发生连接错误时候的回调方法
         this.websocket.onerror = function () {
-            setMessageInnerHTML("WebSocket连接发生错误");
+            setMessageInnerHTML("WebSocket连接发生错误...");
         };
     },
 

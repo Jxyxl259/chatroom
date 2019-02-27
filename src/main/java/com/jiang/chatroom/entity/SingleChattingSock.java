@@ -98,7 +98,10 @@ public class SingleChattingSock {
         String now = getNowTime();
         try {
             if (WebSocketServer.getSocks().get(destUserno) != null) {
-                WebSocketServer.getSocks().get(destUserno).sendMessage(now + "用户" + this.userName + "发来消息：" + " <br/> " + sendMessage);
+                Message msg = new Message(sendMessage, this.userName);
+                String sockMsgJson = JSON.toJSONString(msg);
+//                WebSocketServer.getSocks().get(destUserno).sendMessage(now + "用户" + this.userName + "发来消息：" + " <br/> " + sendMessage);
+                WebSocketServer.getSocks().get(destUserno).sendMessage(sockMsgJson);
             } else {
                 // TODO 对方不在线，将消息放到 MQ中
                 log.info("user:{} offLine", destUserno);
