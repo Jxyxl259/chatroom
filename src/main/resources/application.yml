@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/chatroom?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: root
+    password: jiangBUG
 
   # 静态资源
   resources:
