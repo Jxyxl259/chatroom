@@ -40,7 +40,7 @@
             <AppenderRef ref="file" />
             <AppenderRef ref="error" />
             <!-- 控制台输出耗费性能，本地调试打开，部署服务器关闭 -->
-            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="Console"/>
         </asyncRoot>
         <logger name="org.springframework" level="warn" />
         <logger name="org.mybatis.spring.SqlSessionUtils" level="info" />
