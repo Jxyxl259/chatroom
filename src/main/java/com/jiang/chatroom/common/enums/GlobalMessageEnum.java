@@ -13,24 +13,29 @@ public enum GlobalMessageEnum {
     EXCESSIVE_LOGIN_TYR("111200","密码尝试次数过多"),
     NO_SUCH_ACCOUNT("111201", "该用户不存在"),
     ERROR_USERNAME_OR_PASSWORD("111202", "用户名或密码错误"),
-    AUTHENTICATION_ERROR("111203","用户认证错误");
+    AUTHENTICATION_ERROR("111203","用户认证错误"),
     //-------------- login ------------------
 
+    //------------------- message enum --------------------
+    USER("0","好友消息"),
+    SYSTEM("1","系统消息");
+    //------------------- message enum --------------------
 
-    private String statusCode;
+
+    private String code;
     private String message;
 
-    GlobalMessageEnum(String statusCode, String message) {
-        this.statusCode = statusCode;
+    GlobalMessageEnum(String code, String message) {
+        this.code = code;
         this.message = message;
     }
 
-    public String getStatusCode() {
-        return statusCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getMessage() {

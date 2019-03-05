@@ -40,4 +40,9 @@ public class User {
     public void setOnline(boolean online) {
         this.online = online;
     }
+
+    @Override
+    public String toString() {
+        return "{\"id\":" + id + ", \"userName\":\"" + userName + "\",\"online\":"+ online +"}";
+    }
 }

@@ -14,7 +14,7 @@ public class RequestResultFactory {
     private static RequestResult sucess = new RequestResult(true);
 
     static {
-        sucess.setStatusCode(String.valueOf(GlobalMessageEnum.SUCCESS.getStatusCode()));
+        sucess.setStatusCode(String.valueOf(GlobalMessageEnum.SUCCESS.getCode()));
         sucess.setMessage(GlobalMessageEnum.SUCCESS.getMessage());
     }
 
@@ -27,7 +27,7 @@ public class RequestResultFactory {
     public static <T> RequestResult<T> success(T t){
         RequestResult res = new RequestResult(true);
         res.setMessage(GlobalMessageEnum.SUCCESS.getMessage());
-        res.setStatusCode(GlobalMessageEnum.SUCCESS.getStatusCode());
+        res.setStatusCode(GlobalMessageEnum.SUCCESS.getCode());
         res.setT(t);
         return res;
     }
@@ -35,7 +35,7 @@ public class RequestResultFactory {
     public static <T> RequestResult<T> success(T t, String message){
         RequestResult res = new RequestResult(true);
         res.setMessage(message);
-        res.setStatusCode(GlobalMessageEnum.SUCCESS.getStatusCode());
+        res.setStatusCode(GlobalMessageEnum.SUCCESS.getCode());
         res.setT(t);
         return res;
     }
@@ -49,14 +49,14 @@ public class RequestResultFactory {
 
     public static RequestResult failed(GlobalMessageEnum Global){
         RequestResult res = new RequestResult(false);
-        res.setStatusCode(Global.getStatusCode());
+        res.setStatusCode(Global.getCode());
         res.setMessage(Global.getMessage());
         return res;
     }
 
     public static RequestResult failed(GlobalMessageEnum Global, String faildReason){
         RequestResult res = new RequestResult(false);
-        res.setStatusCode(Global.getStatusCode());
+        res.setStatusCode(Global.getCode());
         res.setMessage(Global.getMessage());
         if(StringUtils.isNotBlank(faildReason)){
             res.setMessage(faildReason);

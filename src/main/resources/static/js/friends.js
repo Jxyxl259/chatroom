@@ -111,14 +111,16 @@ var show_chat_tab = function(ele){
     var active_tab = $("#chat_record_tab_ul li.active")[0];
     if(!isEmpty(active_tab)){
 
-        // 获取到当前活动的tab头信息 ul>li>a 的文本，如果与即将打开的聊天对象的昵称不相同 则移除当前tab的活动标签并 新打开一个tab页
+        // 当前tab头 ul>li>a 的文本，如果与聊天对象的昵称 相同则拉取聊天记录并直接返回，不相同 则移除 tab div & chat div的 active类 新打开一个tab div 和 chat div
         var _active_tab_name = $("#chat_record_tab_ul li.active a")[0];
-        var _active_tab_contact_name = _active_tab_name.innerHTML;
+        var _active_tab_contact_name = trim(_active_tab_name.innerHTML);
         if( trim(_active_tab_contact_name) === friend_name ){
             // 当前tab页为A 点击好友列表中的A，TODO 拉取聊天记录
             return;
         }
+        // 移除掉当前 _tab_header 和 _chat_container中的 active类
         $(active_tab).removeClass("active");
+        $("#"+_active_tab_contact_name).removeClass("active in");
     }
 
     // 获取到所有tab页头部，判断如果有与 好友列表聊天对象昵称相同的则激活
@@ -127,10 +129,12 @@ var show_chat_tab = function(ele){
         var _a_ele = $(this);
         if (friend_name === trim(this.innerHTML)) {
             _a_ele.parent("li").addClass("active");
+            $("#"+friend_name).add("active in");
             _tab_exist = true;
         }
     });
 
+    // 激活后拉取聊天记录
     if( _tab_exist ){
         // TODO 拉取聊天记录
         return;
@@ -155,7 +159,6 @@ var show_chat_tab = function(ele){
     $("#chat_record_tab_ul").append(user_tab_header);
 
     // 获取当前好友的聊天记录
-    $("#chat_recoed_area_container").html("");
     $("#chat_recoed_area_container").append(chat_container)
 
 

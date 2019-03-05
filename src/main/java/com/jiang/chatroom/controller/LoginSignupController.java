@@ -1,13 +1,18 @@
 package com.jiang.chatroom.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.jiang.chatroom.common.RequestResult;
 import com.jiang.chatroom.common.enums.GlobalMessageEnum;
 import com.jiang.chatroom.common.util.IpAddressUtil;
+import com.jiang.chatroom.config.websocket.WebSocketServer;
 import com.jiang.chatroom.entity.User;
+import com.jiang.chatroom.entity.chat.Message;
 import com.jiang.chatroom.service.UserService;
+import com.jiang.chatroom.vo.UserVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashSet;
 
 @Controller
@@ -53,12 +59,30 @@ public class LoginSignupController {
             session.setAttribute("user", user);
             String userIp = IpAddressUtil.getIpAdrress(request);
             log.info("用户IP地址{}", userIp);
-            HashSet<String> userNameSet = (HashSet<String>)session.getServletContext().getAttribute("ONLINE_USERS");
-            userNameSet.add(user.getUserName());
+            HashSet<String> onlineUserNames = (HashSet<String>)session.getServletContext().getAttribute("ONLINE_USERS");
+            onlineUserNames.add(user.getUserName());
             //Jedis jedis = jedisConfig.getConnection();
 
             // 缓存用户登录后的IP地址
             // jedis.hset(userIpAddrHashKey, String.valueOf(user.getId()), userIp);
+
+            // 登录后通知好友 上线信息
+            UserVo userVo = userService.getUserFriendList(user.getId());
+
+            if(!CollectionUtils.isEmpty(userVo.getFriend())){
+                userVo.getFriend().forEach(f ->{
+                    if(onlineUserNames.contains(f.getUserName())){
+                        // 一个用户登出，通知浏览器client端有该用户好友的用户 该好友下线
+                        try {
+                            user.setOnline(true);
+                            WebSocketServer.getSocks().get(f.getUserName()).sendMessage(JSON.toJSONString(new Message(user.toString(), "system", GlobalMessageEnum.SYSTEM.getCode())));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("用户登陆时通知好友，好友已上线，web-socket IO 异常", e);
+                        }
+                    }
+                });
+            }
         } catch (ExcessiveAttemptsException e) {
             result.setSuccess(false);
             result.setT(false);

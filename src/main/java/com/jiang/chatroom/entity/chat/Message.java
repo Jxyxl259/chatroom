@@ -16,6 +16,13 @@ public class Message {
     private Date timeStamp;
 
     /**
+     * 消息类型
+     * "0" -> 好友消息
+     * "1" -> 系统消息
+     */
+    private String msgType;
+
+    /**
      * 消息内容
      */
     private String msg;
@@ -36,8 +43,9 @@ public class Message {
     }
 
 
-    public Message(String msg, String contactName) {
+    public Message(String msg, String contactName, String msgType) {
         this.msg = msg;
+        this.msgType = msgType;
         this.contactName = contactName;
     }
 
@@ -75,12 +83,22 @@ public class Message {
         this.timeStamp = timeStamp;
     }
 
+
+    public String getMsgType() {
+        return msgType;
+    }
+
+    public void setMsgType(String msgType) {
+        this.msgType = msgType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
         return Objects.equals(timeStamp, message.timeStamp) &&
+                Objects.equals(msgType, message.msgType) &&
                 Objects.equals(msg, message.msg) &&
                 Objects.equals(contactName, message.contactName) &&
                 Objects.equals(contactIpAddr, message.contactIpAddr);
@@ -89,13 +107,14 @@ public class Message {
     @Override
     public int hashCode() {
 
-        return Objects.hash(timeStamp, msg, contactName, contactIpAddr);
+        return Objects.hash(timeStamp, msgType, msg, contactName, contactIpAddr);
     }
 
     @Override
     public String toString() {
         return "Message{" +
                 "timeStamp=" + timeStamp +
+                ", msgType='" + msgType + '\'' +
                 ", msg='" + msg + '\'' +
                 ", contactName='" + contactName + '\'' +
                 ", contactIpAddr='" + contactIpAddr + '\'' +

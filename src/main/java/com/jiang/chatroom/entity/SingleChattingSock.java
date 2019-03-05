@@ -2,6 +2,7 @@ package com.jiang.chatroom.entity;
 
 
 import com.alibaba.fastjson.JSON;
+import com.jiang.chatroom.common.enums.GlobalMessageEnum;
 import com.jiang.chatroom.config.websocket.WebSocketServer;
 import com.jiang.chatroom.entity.chat.Message;
 import org.slf4j.Logger;
@@ -98,7 +99,7 @@ public class SingleChattingSock {
         String now = getNowTime();
         try {
             if (WebSocketServer.getSocks().get(destUserno) != null) {
-                Message msg = new Message(sendMessage, this.userName);
+                Message msg = new Message(sendMessage, this.userName, GlobalMessageEnum.USER.getCode());
                 String sockMsgJson = JSON.toJSONString(msg);
 //                WebSocketServer.getSocks().get(destUserno).sendMessage(now + "用户" + this.userName + "发来消息：" + " <br/> " + sendMessage);
                 WebSocketServer.getSocks().get(destUserno).sendMessage(sockMsgJson);
@@ -167,6 +168,7 @@ public class SingleChattingSock {
      * @throws IOException  
      */
     public void sendMessage(String message) throws IOException {
+
         this.webSocketSession.getBasicRemote().sendText(message);
         //this.session.getAsyncRemote().sendText(message);
     }

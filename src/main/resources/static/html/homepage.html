@@ -8,8 +8,18 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/common.css}" href="../css/common.css" rel="stylesheet">
     <link th:href="@{/css/font-awesome.min.css}" href="../css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../lib/emoj/lib/css/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="../lib/emoj/src/css/jquery.emoji.css"/>
 
+    <!-- jQuery -->
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- emoj start -->
+    <script src="../lib/emoj/lib/script/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="../lib/emoj/lib/script/jquery.mCustomScrollbar.min.js"></script>
+    <script src="../lib/emoj/dist/js/jquery.emoji.min.js"></script>
+    <!-- emoj end -->
+
     <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -67,6 +77,9 @@
                 <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
             </div>-->
         </div>
+    </div>
+    <div id="rich_text" style="width: 1000px;height: 35px;float: left;">
+        <button type="button" id="show_emoji_box_btn" style="margin: 2px 2px;width: 25px;height: 25px;background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZBAMAAAA2x5hQAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAkUExURUxpcfTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAPTGAOfx6yUAAAALdFJOUwAzbVQOoYrzwdwkAoU+0gAAAM1JREFUGNN9kK0PQWEUxl8fM24iCYopwi0muuVuzGyKwATFZpJIU01RUG/RBMnHxfz+Oef9uNM84d1+23nO+zxHKVG2WWupRJkdcAwtpCK0lpbqWE01pB0QayonREMoIp7AawQrWSgGGb4pn6dSeSh68FAVXqHqy3wKrkJiDGDTg3dnp//w+WnwlwIOJauF+C7sXRVfdha4O4oIJfTbtdSxs2uqhs585A0ko8iLTMEcDE1n65A+29pYAlr72nz9dKu7GuNTcsL2fDQzB/wCPVJ69nZGb3gAAAAASUVORK5CYII=);border: 0px;" ></button>
     </div>
 
     <div id="input_frame_container" class="input_frame_container_div">

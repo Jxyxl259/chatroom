@@ -205,7 +205,7 @@ public class MyShiroConfig{
 
 
     @Bean
-    public MyPathMatchingFilterChainResolver filterChainResolver(/*@Autowired JedisPool jedisPool*/){
+    public MyPathMatchingFilterChainResolver filterChainResolver(/*@Autowired JedisPool jedisPool*/@Autowired UserService userService){
         MyPathMatchingFilterChainResolver filterChainResolver = new MyPathMatchingFilterChainResolver();
         MyFilterChainManager filterChainManager = new MyFilterChainManager();
 
@@ -221,7 +221,7 @@ public class MyShiroConfig{
 
         // 此处添加自定义拦截器实现扩展
         Map<String, Filter> customFilters = new LinkedHashMap<>();
-        MyLogoutFilter logoutFilter = new MyLogoutFilter();
+        MyLogoutFilter logoutFilter = new MyLogoutFilter(userService);
         customFilters.put("logout", logoutFilter);
         filterChainManager.setCustomFilters(customFilters);
 
