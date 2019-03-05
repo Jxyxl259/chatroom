@@ -43,7 +43,7 @@
             <AppenderRef ref="Console"/>
         </asyncRoot>
         <logger name="org.springframework" level="warn" />
-        <logger name="org.mybatis.spring.SqlSessionUtils" level="info" />
+        <logger name="org.mybatis.spring.SqlSessionUtils" level="debug" />
     </Loggers>
 
 </Configuration>

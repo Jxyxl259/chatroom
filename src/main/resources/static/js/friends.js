@@ -11,6 +11,7 @@ $(function(){
         }
     );
 
+
     fetch_friend_list();
 
 
@@ -53,6 +54,11 @@ $(function(){
 });
 
 var fetch_friend_list = function(){
+
+    if( !$("#login_username").html()){
+        return;
+    }
+
     console.log("拉取用户好友列表...");
     $("#_user_friends_list").html("");
     // 好友列表 ul

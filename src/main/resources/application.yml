@@ -15,10 +15,12 @@ spring:
   # 静态资源
   resources:
     # 静态资源查找路径
-    static-locations: classpath:/static
+    static-locations: classpath:/static/
     # 开发环境关闭缓存
     chain:
       cache: false
+    # 开启 静态资源映射处理器
+    #add-mappings: true
 
   # thymeleaf模板引擎
   thymeleaf:

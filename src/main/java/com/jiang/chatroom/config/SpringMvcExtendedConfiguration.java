@@ -23,7 +23,7 @@ public class SpringMvcExtendedConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         // 主页面
-        registry.addViewController("/").setViewName("homepage");
+        //registry.addViewController("/").setViewName("homepage");
         //registry.addViewController("/homepage.html").setViewName("index");
         //registry.addViewController("/index").setViewName("homepage");
 
@@ -33,6 +33,7 @@ public class SpringMvcExtendedConfiguration extends WebMvcConfigurerAdapter {
         // 后台页面
         registry.addViewController("/zone/mc").setViewName("zone/zone_mc");
     }
+
 
     /**
 	 * 配置 locale解析对象

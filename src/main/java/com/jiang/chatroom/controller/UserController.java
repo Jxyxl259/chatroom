@@ -97,7 +97,7 @@ public class UserController {
      */
     @PostMapping("/addFriend")
     @ResponseBody
-    public RequestResult<Boolean> signUp(User friend, HttpSession session){
+    public RequestResult<Boolean> addFriend(User friend, HttpSession session){
         //log.debug("signUp user={}", u);
         RequestResult<Boolean> result = new RequestResult<>(true,true);
         User user = (User) session.getAttribute("user");

@@ -120,7 +120,9 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.jiang.chatroom.entity.User">
+
+    <!-- 主键自动生成 -->
+    <insert id="insert" parameterType="com.jiang.chatroom.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into t_user (id, user_name, user_password
       )
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}

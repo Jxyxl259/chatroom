@@ -16,7 +16,7 @@ $(function() {
 
     // 如果浏览器session缓存中有之前保存的，打开的聊天窗口，直接显示出来
     var _chat_content = window.sessionStorage["chat_contant"];
-    if (trim(_chat_content) != "") {
+    if (_chat_content && !trim( _chat_content)) {
         $("#chat_record_container").html(_chat_content)
     }
 
@@ -77,7 +77,7 @@ var send_msg = function(contact, msg){
     _web_socket.sendChattingMsg(JSON.stringify({'msg':msg,'contactName':contact}));
     var _msg_div =
        ' <div style="display:block;float:left;width:100%">' +
-       '     <p style="margin:2px 20px 2px 0px;width: fit-content;max-width: 40%;float:right;border-radius:5px ;border:1px solid #d5d5d5;padding: 2px 5px;">'+ msg +'</p>'+
+       '     <p style="margin:2px 20px 2px 0px;width: fit-content;max-width: 40%;float:right;border-radius:5px ;border:1px solid #d5d5d5;padding: 2px 5px; word-break: normal;">'+ msg +'</p>'+
        ' </div>';
     $("#"+contact).append(_msg_div);
     $("#input_area").val("");
@@ -105,7 +105,7 @@ var _web_socket = {
 
         // 初始化 socket连接
          this.websocket = new WebSocket("ws://10.112.98.226:8080/dispatcher/" + name);
-        //this.websocket = new WebSocket("ws://94.191.27.230/:80/dispatcher/" + name);
+        //this.websocket = new WebSocket("ws://94.191.27.230:80/dispatcher/" + name);
         // this.websocket = new WebSocket("ws://192.168.0.109:80/dispatcher/" + name);
 
         // 连接成功建立的回调方法

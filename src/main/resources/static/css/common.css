@@ -21,7 +21,7 @@
     height: 420px;
 }
 
-div.scroll{    overflow: auto;max-height: 600px;}
+div.scroll{    overflow: -webkit-paged-y;max-height: 470px;}
 div.center_content{width:1000px; height: 800px;float: left; border-left: 1px solid black; border-top: 1px solid black;}
 div.top_nav_div{width:1200px;height:30px; border:1px solid black; float: left;}
 div.top_nav_div>div.top_nav_btn_grp_div{float: right; padding-right: 50px;}

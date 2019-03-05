@@ -168,15 +168,15 @@ $(function(){
             success:function(res){
                 if(res.success){
                     console.log("登陆成功,跳转到首页");
-                    window.location.href=window.location.href.substr(0,window.location.href.lastIndexOf("/"));
-
+                    // 该请求是post请求?
+                    window.refresh(true);//location.href=window.location.href.substr(0,window.location.href.lastIndexOf("/"));
                 }else{
                     console.error("登陆失败, 错误原因:" + res.message);
                     alert("登录失败：" + res.message)
+                    return false;
                 }
             }
         });
-       return false;
     });
 
     /**

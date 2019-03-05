@@ -13,27 +13,20 @@
 
     <!-- jQuery -->
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" crossorigin="anonymous"></script>
 
     <!-- emoj start -->
-    <script src="../lib/emoj/lib/script/jquery.mousewheel-3.0.6.min.js"></script>
-    <script src="../lib/emoj/lib/script/jquery.mCustomScrollbar.min.js"></script>
-    <script src="../lib/emoj/dist/js/jquery.emoji.min.js"></script>
+    <script th:src="@{/lib/emoj/lib/script/jquery.mousewheel-3.0.6.min.js}"  src="../lib/emoj/lib/script/jquery.mousewheel-3.0.6.min.js"></script>
+    <script th:src="@{/lib/emoj/lib/script/jquery.mCustomScrollbar.min.js}" src="../lib/emoj/lib/script/jquery.mCustomScrollbar.min.js"></script>
+    <script th:src="@{/lib/emoj/dist/js/jquery.emoji.min.js}" src="../lib/emoj/dist/js/jquery.emoji.min.js"></script>
     <!-- emoj end -->
 
-    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <!-- 首页js -->
-    <!--<script src="../js/homepage.js"></script>
-    <script src="../js/common.js"></script>-->
     <script th:src="@{/js/login.js}" src="../js/login.js"></script>
     <script th:src="@{/js/friends.js}" src="../js/friends.js"></script>
     <script th:src="@{/js/chat.js}" src="../js/chat.js"></script>
-    <script type="text/javascript">
-        // $(function(){
-        //     $("#li_1").html("aaaaa");
-        // })
-    </script>
+
 </head>
 <body>
 
