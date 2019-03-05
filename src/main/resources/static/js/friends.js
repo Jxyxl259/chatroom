@@ -62,7 +62,11 @@ var fetch_friend_list = function(){
            '{{each(i, _user_friend) friend}}'+
            '     <li id="${_user_friend.id}">'+
            '        <div style="display: inline;cursor:pointer;" onclick="show_chat_tab(this)">' +
-            '           <img width="30" height="30" src="./../img/qq_icon.png"/><span>${_user_friend.userName}</span>' +
+            '           {{if _user_friend.online}}'+
+            '               <img width="30" height="30" src="./../img/qq_icon.png"/><span>${_user_friend.userName}</span>' +
+            '          {{else}}'+
+            '               <img width="30" height="30" src="./../img/head_icon_offline_02.png"/><span>${_user_friend.userName}</span>' +
+            '           {{/if}}'+
             '       </div>'+
            '     </li>'+
            '{{/each}}'+

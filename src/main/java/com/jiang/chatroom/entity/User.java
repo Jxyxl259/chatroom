@@ -7,6 +7,8 @@ public class User {
 
     private String userPassword;
 
+    private boolean online;
+
     public Long getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword == null ? null : userPassword.trim();
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }

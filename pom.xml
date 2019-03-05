@@ -138,6 +138,13 @@
             <artifactId>disruptor</artifactId>
             <version>3.2.1</version>
         </dependency>
+        <!-- jcl 桥接到slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
         <!-- ===============================================  log4j2 日志打印需要依赖的jar包 end ===============================================-->
 
 

@@ -6,9 +6,7 @@ import com.jiang.chatroom.common.RequestResultFactory;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.service.UserService;
 import com.jiang.chatroom.vo.UserVo;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @description: 用户相关的控制器
@@ -65,7 +65,18 @@ public class UserController {
         Long userId = u.getId();
         UserVo userVo  = null;
         try {
+            HashSet<String> onlineUser = (HashSet<String>)request.getSession().getServletContext().getAttribute("ONLINE_USERS");
             userVo = userService.getUserFriendList(userId);
+            List<User> friend = userVo.getFriend();
+            if(!CollectionUtils.isEmpty(friend)){
+                friend.forEach(f ->{
+                    if(onlineUser.contains(f.getUserName())){
+                        f.setOnline(true);
+                    }else{
+                        f.setOnline(false);
+                    }
+                });
+            }
         } catch (Exception e) {
             log.error("拉取好友列表 userService.getUserFriendList 异常, cause:{} message:{}", e.getCause(), e.getMessage());
             result.setMessage("拉取好友列表异常，请联系管理员");

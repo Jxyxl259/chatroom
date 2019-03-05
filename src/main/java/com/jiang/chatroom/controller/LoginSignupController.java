@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 
 @Controller
 public class LoginSignupController {
@@ -52,6 +53,8 @@ public class LoginSignupController {
             session.setAttribute("user", user);
             String userIp = IpAddressUtil.getIpAdrress(request);
             log.info("用户IP地址{}", userIp);
+            HashSet<String> userNameSet = (HashSet<String>)session.getServletContext().getAttribute("ONLINE_USERS");
+            userNameSet.add(user.getUserName());
             //Jedis jedis = jedisConfig.getConnection();
 
             // 缓存用户登录后的IP地址

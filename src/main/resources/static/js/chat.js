@@ -89,7 +89,8 @@ var _web_socket = {
     initSocket : function(name){
 
         // 初始化 socket连接
-         this.websocket = new WebSocket("ws://10.112.98.226:80/dispatcher/" + name);
+         this.websocket = new WebSocket("ws://10.112.98.226:8080/dispatcher/" + name);
+        //this.websocket = new WebSocket("ws://94.191.27.230/:80/dispatcher/" + name);
         // this.websocket = new WebSocket("ws://192.168.0.109:80/dispatcher/" + name);
 
         // 连接成功建立的回调方法
