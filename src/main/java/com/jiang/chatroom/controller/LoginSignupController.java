@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.jiang.chatroom.common.RequestResult;
 import com.jiang.chatroom.common.enums.GlobalMessageEnum;
 import com.jiang.chatroom.common.util.IpAddressUtil;
+import com.jiang.chatroom.config.websocket.WebSocketConfig;
 import com.jiang.chatroom.config.websocket.WebSocketServer;
+import com.jiang.chatroom.entity.SingleChattingSock;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.entity.chat.Message;
 import com.jiang.chatroom.service.UserService;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 
 @Controller
 public class LoginSignupController {
@@ -33,6 +37,16 @@ public class LoginSignupController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WebSocketConfig webSocketConfig;
+
+    @GetMapping("/getServerAddr")
+    @ResponseBody
+    public RequestResult<String> serverAddr(){
+        return new RequestResult<>(webSocketConfig.getWebSocketServerIpPort(), true);
+    }
+
 //    @Autowired
 //    private JedisConfig jedisConfig;
 
@@ -73,10 +87,17 @@ public class LoginSignupController {
             if(!CollectionUtils.isEmpty(userVo.getFriend())){
                 userVo.getFriend().forEach(f ->{
                     if(onlineUserNames.contains(f.getUserName())){
-                        // 一个用户登出，通知浏览器client端有该用户好友的用户 该好友下线
+                        // 一个用户登入，通知浏览器client端有该用户好友的用户 该好友上线
                         try {
                             user.setOnline(true);
-                            WebSocketServer.getSocks().get(f.getUserName()).sendMessage(JSON.toJSONString(new Message(user.toString(), "system", GlobalMessageEnum.SYSTEM.getCode())));
+                            Map<String, SingleChattingSock> socks = WebSocketServer.getSocks();
+                            String needNotifyUserName = f.getUserName();
+                            log.info("user {} login, needNotify his friend:{}", user.getUserName(), needNotifyUserName);
+                            SingleChattingSock sock = socks.get(needNotifyUserName);
+                            if(sock != null && !org.apache.commons.lang3.StringUtils.isEmpty(needNotifyUserName)) {
+                                String userOnlineMsg = JSON.toJSONString(new Message(user.toString(), "system", GlobalMessageEnum.SYSTEM.getCode()));
+                                sock.sendMessage(userOnlineMsg);
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                             throw new RuntimeException("用户登陆时通知好友，好友已上线，web-socket IO 异常", e);

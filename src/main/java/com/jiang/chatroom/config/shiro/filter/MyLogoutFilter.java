@@ -3,6 +3,7 @@ package com.jiang.chatroom.config.shiro.filter;
 import com.alibaba.fastjson.JSON;
 import com.jiang.chatroom.common.enums.GlobalMessageEnum;
 import com.jiang.chatroom.config.websocket.WebSocketServer;
+import com.jiang.chatroom.entity.SingleChattingSock;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.entity.chat.Message;
 import com.jiang.chatroom.service.UserService;
@@ -15,6 +16,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @description: 扩展用户登出过滤器
@@ -60,10 +62,16 @@ public class MyLogoutFilter extends LogoutFilter {
         if(!CollectionUtils.isEmpty(userVo.getFriend())){
             userVo.getFriend().forEach(f ->{
                 if(onlineUserNames.contains(f.getUserName())){
-                    // 一个用户登出，通知浏览器client端有该用户好友的用户 该好友下线
+                    // 一个用户登入，通知浏览器client端有该用户好友的用户 该好友上线
                     try {
                         user.setOnline(false);
-                        WebSocketServer.getSocks().get(f.getUserName()).sendMessage(JSON.toJSONString(new Message(user.toString(), "system", GlobalMessageEnum.SYSTEM.getCode())));
+                        Map<String, SingleChattingSock> socks = WebSocketServer.getSocks();
+                        String needNotifyUserName = f.getUserName();
+                        SingleChattingSock sock = socks.get(needNotifyUserName);
+                        if(sock != null && !org.apache.commons.lang3.StringUtils.isEmpty(needNotifyUserName)) {
+                            String userOnlineMsg = JSON.toJSONString(new Message(user.toString(), "system", GlobalMessageEnum.SYSTEM.getCode()));
+                            sock.sendMessage(userOnlineMsg);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                         throw new RuntimeException("用户登出时通知好友该好友已下线，web-socket IO 异常", e);
@@ -71,7 +79,6 @@ public class MyLogoutFilter extends LogoutFilter {
                 }
             });
         }
-
 
         return super.preHandle(request, response);
     }

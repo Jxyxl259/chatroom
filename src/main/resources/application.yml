@@ -2,31 +2,10 @@
 server:
   port: 80
 
-#spring.mvc.static-path-pattern=/static/**
-
-# 数据库连接
 spring:
-  datasource: 
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/chatroom?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-    username: root
-    password: root
-
-  # 静态资源
-  resources:
-    # 静态资源查找路径
-    static-locations: classpath:/static/
-    # 开发环境关闭缓存
-    chain:
-      cache: false
-    # 开启 静态资源映射处理器
-    #add-mappings: true
-
-  # thymeleaf模板引擎
-  thymeleaf:
-    prefix: classpath:/static/html/
-    suffix: .html
-    cache: false
+  profiles:
+    active: dev
+#spring.mvc.static-path-pattern=/static/**
 
   #redis jedis配置
   #redis:
@@ -49,11 +28,6 @@ spring:
  #     min-idle: 0
       # 连接超时时间（毫秒）
  #   timeout: 0
-
-
-  #spring-session 使用
-  session:
-    store-type: none
 
 
 # mybatis

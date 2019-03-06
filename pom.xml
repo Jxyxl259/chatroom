@@ -36,6 +36,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- 更新元数据，之后再编写yaml配置文件可以出现提示 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- thymeleaf start  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
