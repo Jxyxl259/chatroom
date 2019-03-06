@@ -144,9 +144,14 @@ public class LoginSignupController {
         result = userService.userSignUp(u);
         if(result.getSuccess()){
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
+            u.setOnline(true);
             session.setAttribute("user", u);
+
+            HashSet<String> onlineUserNames = (HashSet<String>)session.getServletContext().getAttribute("ONLINE_USERS");
+            onlineUserNames.add(u.getUserName());
         } else{
             log.error("用户注册失败, 原因：{}", result.getMessage());
         }

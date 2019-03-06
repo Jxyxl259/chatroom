@@ -9,6 +9,14 @@ public class User {
 
     private boolean online;
 
+    public User() {
+    }
+
+    public User(Long id, String userName) {
+        this.id = id;
+        this.userName = userName;
+    }
+
     public Long getId() {
         return id;
     }
@@ -45,4 +53,5 @@ public class User {
     public String toString() {
         return "{\"id\":" + id + ", \"userName\":\"" + userName + "\",\"online\":"+ online +"}";
     }
+
 }

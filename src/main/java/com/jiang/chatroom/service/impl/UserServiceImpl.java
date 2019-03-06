@@ -1,11 +1,13 @@
 package com.jiang.chatroom.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Iterables;
 import com.jiang.chatroom.common.RequestResult;
 import com.jiang.chatroom.dao.UserMapper;
 import com.jiang.chatroom.entity.User;
 import com.jiang.chatroom.service.UserService;
 import com.jiang.chatroom.vo.UserVo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
@@ -56,6 +58,8 @@ public class UserServiceImpl implements UserService {
 
         UserVo userVo = new UserVo();
         List<User> friends = userMapper.getUserFriendList(userId);
+        // Iterables 非Iterators
+        Iterables.removeIf(friends, (u) -> StringUtils.isEmpty(u.getUserName()));
         userVo.setFriend(friends);
         return userVo;
     }
