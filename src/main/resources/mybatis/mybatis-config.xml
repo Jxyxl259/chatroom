@@ -5,8 +5,15 @@
 <configuration>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="logImpl" value="LOG4J2" />
     </settings>
     <typeAliases>
     </typeAliases>
+
+    <plugins>
+        <!-- 拦截器配置 -->
+        <plugin interceptor="com.jiang.chatroom.config.mybatis.SqlCostInterceptor" />
+    </plugins>
+
     
 </configuration>
