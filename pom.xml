@@ -64,6 +64,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -72,19 +73,22 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
-                <!-- 可以排也可以不排，排掉的话下面的org.jboss.slf4j:slf4j-jboss-logging:1.1.0.Final 这个jar包也会再引进来 -->
+                <!-- 不可以排除 Hibernate Validator 依赖jboss logger -->
                <!-- <exclusion>
                     <artifactId>jboss-logging</artifactId>
                     <groupId>org.jboss.logging</groupId>
                 </exclusion>-->
             </exclusions>
         </dependency>
-        <!-- Hibernate Validator 依赖jboss logger 来打印日志，所以使用jboss-slf4j的桥接包 -->
-        <dependency>
+        <!-- Hibernate Validator 依赖jboss logger，
+            这个是slf4j的jboss日志实现包，而非jboss的slf4j桥接包
+            如果该包 与 slf4j 的og4j2日志实现包 log4j-slf4j-impl 同时出现在类路径下的话，
+            项目启动会优先使用jboss作为slf4j的日志实现，也就说log4j2的配置就无效了,所以不能加进来。  -->
+        <!--<dependency>
             <groupId>org.jboss.slf4j</groupId>
             <artifactId>slf4j-jboss-logging</artifactId>
             <version>1.1.0.Final</version>
-        </dependency>
+        </dependency>-->
 
 
 
