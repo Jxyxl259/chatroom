@@ -200,11 +200,11 @@ $(function(){
             contentType:false,
             success:function(res){
                 if(res.success){
-                    console.log("注册成功成功,跳转到首页");
+                    console.log("注册成功,跳转到首页");
                     window.location.href=window.location.href.substr(0,window.location.href.lastIndexOf("/"));
-
                 }else{
                     console.error("注册失败, 错误原因:" + res.message);
+                    alert(res.message)
                 }
             }
         });

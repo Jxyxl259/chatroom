@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.jiang.chatroom.common.enums.GlobalMessageEnum.USER_EXIST;
+
 /**
  * @description: 用户服务层实现
  * @author: jiangBUG@outlook.com
@@ -59,7 +61,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userSignUp(User u) {
+    public RequestResult<String> userSignUp(User u) {
+
+        RequestResult<String> result = new RequestResult<>(false);
+
+        User user = userMapper.selectByUserName(u.getUserName());
+        if(user != null){
+            result.setStatusCode(USER_EXIST.getCode());
+            result.setMessage(USER_EXIST.getMessage());
+            result.setT(USER_EXIST.getMessage());
+            return result;
+        }
 
         String passwordBeforeEncrypt = u.getUserPassword();
         ByteSource credentialsSalt = ByteSource.Util.bytes(u.getUserName());
@@ -71,8 +83,8 @@ public class UserServiceImpl implements UserService {
 
         u.setUserPassword(simpleHash.toString());
         int insert = userMapper.insert(u);
-
-        return insert == 1;
+        result.setSuccess(true);
+        return result;
     }
 
 

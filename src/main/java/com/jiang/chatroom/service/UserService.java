@@ -40,7 +40,7 @@ public interface UserService {
      * @param u
      * @return
      */
-    boolean userSignUp(User u);
+    RequestResult<String> userSignUp(User u);
 
     /**
      * 用户添加好友

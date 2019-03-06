@@ -134,21 +134,21 @@ public class LoginSignupController {
      */
     @PostMapping("/doSignup")
     @ResponseBody
-    public RequestResult<Boolean> signUp(User u, HttpSession session){
+    public RequestResult<String> signUp(User u, HttpSession session){
         //log.debug("signUp user={}", u);
-        RequestResult<Boolean> result = new RequestResult<>(true,true);
+        RequestResult<String> result = new RequestResult<>(true);
 
         String username = u.getUserName();
         String password = u.getUserPassword();
 
-        boolean success = userService.userSignUp(u);
-        if(success){
+        result = userService.userSignUp(u);
+        if(result.getSuccess()){
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             session.setAttribute("user", u);
         } else{
-            log.error("用户注册失败");
+            log.error("用户注册失败, 原因：{}", result.getMessage());
         }
         return result;
     }

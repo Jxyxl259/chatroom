@@ -19,7 +19,7 @@ spring:
   resources:
     # 静态资源查找路径
     static-locations: classpath:/static/
-    # 开发环境关闭缓存
+    # 生产环境开启缓存缓存
     chain:
       cache: true
     # 开启 静态资源映射处理器

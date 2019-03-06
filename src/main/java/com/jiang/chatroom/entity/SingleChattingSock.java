@@ -46,11 +46,15 @@ public class SingleChattingSock {
     @OnOpen
     public void onOpen(@PathParam(value = "userName") String userName, Session socketSession, EndpointConfig config) {
         log.info(userName);
-        this.userName = userName;//接收到发送消息的人员编号
-        this.webSocketSession = socketSession;
-        WebSocketServer.getSocks().put(userName, this);//加入map中
-        //addOnlineCount();  //在线数加1
-        log.info("userName:{} connect to web webSocketServer !", userName);
+        SingleChattingSock sock = WebSocketServer.getSocks().get(userName);
+        // 注册成功，直接登录，创建sock并保存
+        if(sock == null) {
+            this.userName = userName;//接收到发送消息的人员编号
+            this.webSocketSession = socketSession;
+            WebSocketServer.getSocks().put(userName, this);//加入map中
+            //addOnlineCount();  //在线数加1
+            log.debug("userName:{} connect to web webSocketServer !", userName);
+        }
     }
 
 
